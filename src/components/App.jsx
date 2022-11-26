@@ -1,18 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
 import { filterContacts } from 'redux/filterSlice';
-import { getContacts, getFilter } from 'redux/selector';
-import { addContactItem } from 'redux/contactsSlice';
+import { addContact, fetchContacts } from 'redux/operations';
+import { selectContacts, selectFilter } from 'redux/selector';
 import { Container, Section, Title } from './AppStyled';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const filterName = useSelector(getFilter);
+  const contacts = useSelector(selectContacts);
+  const filterName = useSelector(selectFilter);
   
-   const addContact = ({ name, number }) => {
+useEffect(() => { dispatch(fetchContacts()) }, [dispatch]);
+
+   const addNewContact = ({ name, phone }) => {
     const normalizedFind = name.toLowerCase();
     const findName = contacts.find(
       contact => contact.name.toLowerCase() === normalizedFind
@@ -20,15 +23,13 @@ export const App = () => {
     if (findName) {
       return alert(`${name} is already in contacts.`);
     }
-
     const findNumber = contacts.find(
-      contact => contact.number === number
+      contact => contact.phone === phone
     );
     if (findNumber) {
       return alert(`This phone number is already in use.`);
-    }
-   
-     dispatch(addContactItem({ name, number }));
+    }   
+     dispatch(addContact({ name, phone }));
   };
   
   const handleFilter = evt => {
@@ -54,7 +55,7 @@ export const App = () => {
         <Container>
           <Section title="Phonebook">
           <Title font = '24'>Phonebook</Title>
-            <ContactForm onAddContacs={addContact} />
+            <ContactForm onAddContacs={addNewContact} />
           </Section>
           <Section title="Contacts">
           <Title font = '20'>Contacts</Title>
