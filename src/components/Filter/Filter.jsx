@@ -1,10 +1,12 @@
+import { useId } from 'react';
 import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
+
 import { Label, Input } from './FilterStyled';
 
-const filterId = nanoid(5);
+
 
 export const Filter = ({ value, onChange }) => {
+  const filterId = useId();
   return (
     <Label>
       Find contacts by name
