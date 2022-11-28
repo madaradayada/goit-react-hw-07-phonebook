@@ -10,7 +10,6 @@ export const ContactItem = ({contact}) => {
       dispatch(deleteContact(contact.id));
     };
     return (
-      <>
         <Item>
           <p>
             {contact.name}: {contact.phone}
@@ -19,6 +18,5 @@ export const ContactItem = ({contact}) => {
             Delete
           </Button>
         </Item>
-      </>
     );
   };

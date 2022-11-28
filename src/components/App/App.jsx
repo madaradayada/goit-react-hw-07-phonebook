@@ -5,7 +5,7 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
 
-import { filterContacts } from 'redux/Slice/filterSlice';
+import { filterContacts } from 'redux/slice/filterSlice';
 import { addContact, fetchContacts } from 'redux/operations';
 import { selectContacts, selectFilter } from 'redux/selector';
 
